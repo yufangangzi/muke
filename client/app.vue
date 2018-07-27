@@ -1,19 +1,22 @@
 <template>
   <div id="test">
     <div id="cover"></div>
+    <Header></Header>
     <Footer></Footer>
   </div>
 </template>
 <script>
-  import Footer from './todos/footer.jsx'
+  import Footer from './layout/footer.jsx'
+  import Header from './layout/header.vue'
   export default {
     data () {
       return {
-        text:'abcuuu'
+        text: 'abcuuu'
       }
     },
-    components:{
-      Footer
+    components: {
+      Footer,
+      Header
     }
   }
 </script>
@@ -32,6 +35,6 @@
     right:0
     bottom:0
     z-index :1
-    opacity: 0.9
+    opacity: 0.4
     background-color :#999
 </style>
