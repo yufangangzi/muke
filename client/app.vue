@@ -9,6 +9,11 @@
   import Footer from './layout/footer.jsx'
   import Header from './layout/header.vue'
   export default {
+    provide () {
+      return {
+        yeye: this
+      }
+    },
     data () {
       return {
         text: 'abcuuu'
