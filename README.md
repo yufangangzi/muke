@@ -30,3 +30,15 @@
 3. NoEmitOnErrorsPlugin 取消掉了
 4. 需要安装 webpack-cli
 
+在 vscode 中配置
+
+"eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        "javascript",
+        {
+        "language": "vue",
+        "autoFix": true
+        },
+        "html",
+        "vue"
+    ],

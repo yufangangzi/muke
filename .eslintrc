@@ -2,7 +2,8 @@
 {
   "extends": "standard",
   "plugins": [
-    "html"
+    "html",
+    "vue"
   ],
   "parser":"babel-eslint"
 }
