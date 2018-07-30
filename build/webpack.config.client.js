@@ -13,10 +13,10 @@ const devServer = {
   overlay: {
     errors: true // 在网页上显示编译中的错误
   },
+  historyApiFallback: {
+    index: '/index.html'// 找不到的地址 再这里处理  刷新的时候 会出现 404   这里的路径事和output 中的publickpath有关系的   如果设置了publickpath  需在前面加上
+  },
   open: true, // 会打开浏览器页面
-  // historyFallback:{
-  //   //找不到的地址 再这里处理
-  // }
   hot: true // 当组件值变化时  只是会刷新单个组件
 }
 
@@ -28,7 +28,10 @@ const defaultPlugins = [
   }),
   new VueLoaderPlugin(),
 
-  new HTMLPlugin() // 可以取看配置项
+  new HTMLPlugin({
+    // filename: '../index.html',
+    // inject: false
+  }) // 可以取看配置项
 ]
 
 let config
