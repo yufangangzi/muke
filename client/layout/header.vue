@@ -20,8 +20,8 @@
       })
     },
     inject: ['yeye'],
-    methods:{
-      bac() {
+    methods: {
+      bac () {
         console.log('7887')
       }
     }
