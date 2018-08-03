@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" @click="bac">
     Jtodo I am back
   </div>
 </template>
@@ -19,6 +19,11 @@
         myname()
       })
     },
-    inject: ['yeye']
+    inject: ['yeye'],
+    methods:{
+      bac() {
+        console.log('7887')
+      }
+    }
   }
 </script>

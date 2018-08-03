@@ -9,3 +9,4 @@ build/env.js
 dist/
 dist.zip
 dist.rar
+server-build

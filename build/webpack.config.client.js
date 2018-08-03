@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
-
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const devServer = {
   port: 8000,
@@ -14,9 +14,9 @@ const devServer = {
     errors: true // 在网页上显示编译中的错误
   },
   historyApiFallback: {
-    index: '/index.html'// 找不到的地址 再这里处理  刷新的时候 会出现 404   这里的路径事和output 中的publickpath有关系的   如果设置了publickpath  需在前面加上
+    index: '/public/index.html'// 找不到的地址 再这里处理  刷新的时候 会出现 404   这里的路径事和output 中的publickpath有关系的   如果设置了publickpath  需在前面加上
   },
-  open: true, // 会打开浏览器页面
+  open: false, // 会打开浏览器页面
   hot: true // 当组件值变化时  只是会刷新单个组件
 }
 
@@ -31,7 +31,9 @@ const defaultPlugins = [
   new HTMLPlugin({
     // filename: '../index.html',
     // inject: false
-  }) // 可以取看配置项
+    template: path.join(__dirname, './template.html')
+  }), // 可以取看配置项
+  new VueClientPlugin()
 ]
 
 let config
@@ -67,11 +69,12 @@ if (isDev) {
 } else {
   config = merge(baseConfig, {
     entry: {
-      app: path.join(__dirname, '../client/index.js'),
+      app: path.join(__dirname, '../client/client-entry.js'),
       vendor: ['vue'] // 在数组上放 不会经常变化的框架  这样会把这些单独打包   需要配合下面的插件 webpack.optimize.CommonsChunkPlugin
     },
     output: {
-      filename: '[name].[chunkhash:8].js' // chunkhash 和hash 的区别是  hash 是整个项目的hash  chunkhash 是针对单个文件的  这样有利于缓存的使用
+      filename: '[name].[chunkhash:8].js', // chunkhash 和hash 的区别是  hash 是整个项目的hash  chunkhash 是针对单个文件的  这样有利于缓存的使用
+      publicPath: '/public/'
     },
     module: {
       rules: [

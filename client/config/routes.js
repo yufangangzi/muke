@@ -11,10 +11,11 @@ export default [
   {
     path: '/app',
     // props: true, // 设置为 true  这样就相当于给组件通过 props  传第参数   也可以直接来赋值
-    components: {
-      default: () => import('../views/todo/todo.vue'),
-      a: () => import('../views/login/index.vue')
-    },
+    // components: {
+    //   default: () => import('../views/todo/todo.vue'),
+    //   a: () => import('../views/login/index.vue')
+    // },
+    component: () => import('../views/todo/todo.vue'),
     beforeEnter: (to, from, next) => {
       console.log('router before enter')
       next()
@@ -33,9 +34,10 @@ export default [
   },
   {
     path: '/login',
-    components: {
-      default: () => import('../views/login/index.vue'),
-      a: () => import('../views/todo/todo.vue')
-    }
+    component: () => import('../views/login/index.vue')
+    // components: {
+    //   default: () => import('../views/login/index.vue'),
+    //   a: () => import('../views/todo/todo.vue')
+    // }
   }
 ]

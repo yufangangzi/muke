@@ -3,14 +3,14 @@
     <div id="cover"></div>
     <Header></Header>
     <p>{{fullname}}----{{counter}}</p>
-    <p>{{textc}}</p>
+    <p>{{text}}</p>
     <router-link to="/app">app</router-link>
     <router-link to="/login">login</router-link>
     <transition name="fade">
       <router-view></router-view>
     </transition>
     <Footer></Footer>
-    <router-view name="a"></router-view>
+    <!-- <router-view name="a"></router-view> -->
   </div>
 </template>
 <script>
@@ -18,6 +18,9 @@
   import Header from './layout/header.vue'
   import {mapGetters, mapState, mapActions} from 'vuex'
   export default {
+    metaInfo: {
+      title: '我是主页啊'
+    },
     provide () {
       return {
         yeye: this

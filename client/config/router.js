@@ -4,7 +4,7 @@ import routes from './routes'
 
 export default () => {
   return new Router({
-    // mode: 'history',
+    mode: 'history',
     routes,
     // base: '/base/'
     linkActiveClass: 'active-link',

@@ -49,4 +49,4 @@ new Vue({
   router: router,
   store,
   render: (h) => h(App)
-}).$mount(root)
+}).$mount('#root')
