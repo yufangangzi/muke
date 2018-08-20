@@ -34,7 +34,8 @@ let pageRouter
 if (isDev) {
   pageRouter = require('./routers/dev-ssr')
 } else {
-  pageRouter = require('./routers/ssr')
+  // pageRouter = require('./routers/ssr')
+  pageRouter = require('./routers/ssr-no-bundle')
 }
 
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())

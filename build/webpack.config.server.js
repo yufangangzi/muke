@@ -8,7 +8,7 @@ const baseConfig = require('./webpack.config.base')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 let config
-// const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
 const plugins = [
   new ExtractPlugin('styles.[contentHash:8].css'),
@@ -16,12 +16,12 @@ const plugins = [
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     'process.env.VUE_ENV': '"server"'
   }),
-  new VueLoaderPlugin(),
-  new VueServerPlugin()
+  new VueLoaderPlugin()
+  // new VueServerPlugin()
 ]
-// if (isDev) {
-//   plugins.push(new VueServerPlugin())
-// }
+if (isDev) {
+  plugins.push(new VueServerPlugin())
+}
 config = merge(baseConfig, {
   target: 'node', // 定义执行环境
   entry: {
