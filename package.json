@@ -14,7 +14,7 @@
     "precommit": "npm run lint-fix",
     "dev:server": "nodemon node server/server.js",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "start":"cross-env NODE_ENV=production node server/server.js"
+    "start": "cross-env NODE_ENV=production node server/server.js"
   },
   "author": "",
   "license": "ISC",
