@@ -7,7 +7,8 @@ import createStore from './store/store'
 import createRouter from './config/router'
 
 import './assets/styles/globle.styl'
-
+import Notifycation from './views/components/notify'
+Vue.use(Notifycation)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(Meta)

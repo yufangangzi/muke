@@ -2,7 +2,7 @@
   <div id="test">
     <div id="cover"></div>
     <Header></Header>
-    <p>{{fullname}}----{{counter}}</p>
+    <p @click="notify">{{fullname}}----{{counter}}</p>
     <p>{{text}}</p>
     <router-link to="/app">app</router-link>
     <router-link to="/login">login</router-link>
@@ -36,7 +36,12 @@
       Header
     },
     methods: {
-      ...mapActions(['undataCountSync'])
+      ...mapActions(['undataCountSync']),
+      notify () {
+        this.$notify({
+          content: 'kdkkdkdk'
+        })
+      }
     },
     mounted () {
       console.log(this.$store)

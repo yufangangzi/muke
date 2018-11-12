@@ -8,6 +8,7 @@ import createRouter from './config/router'
 import './assets/styles/globle.styl'
 // import './assets/styles/teststylus.styl'
 // import './assets/images/timg1.jpg'
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
