@@ -1,17 +1,30 @@
 <template>
-  <div id="test">
+  <el-container>
+    <el-header>
+      <Header></Header>
+    </el-header>
+    <el-main>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
+    </el-main>
+    <el-footer>
+      <Footer></Footer>
+    </el-footer>
+  </el-container>
+  <!-- <div id="test">
     <div id="cover"></div>
     <Header></Header>
     <p @click="notify">{{fullname}}----{{counter}}</p>
     <p>{{text}}</p>
+    <el-button @click="visible = true">Button</el-button>
     <router-link to="/app">app</router-link>
     <router-link to="/login">login</router-link>
     <transition name="fade">
       <router-view></router-view>
     </transition>
     <Footer></Footer>
-    <!-- <router-view name="a"></router-view> -->
-  </div>
+  </div> -->
 </template>
 <script>
   import Footer from './layout/footer.jsx'
@@ -68,21 +81,6 @@
     }
   }
 </script>
-<style lang="stylus" scoped>
-#test
-  position absolute
-  left:0
-  top:0
-  right:0
-  bottom:0
-  // background :url('./assets/images/timg1.jpg') no-repeat
-  // #cover
-  //   position absolute
-  //   left:0
-  //   top:0
-  //   right:0
-  //   bottom:0
-  //   z-index :1
-  //   opacity: 0.4
-  //   background-color :#999
+<style lang="stylus">
+@import './app.styl'
 </style>

@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "ejs": "^2.6.1",
+    "element-ui": "^2.4.9",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-router": "^7.4.0",

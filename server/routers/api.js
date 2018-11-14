@@ -8,11 +8,13 @@ const successResponse = (data) => {
   }
 }
 apiRouter
-  .post('/todo', async (ctx) => {
+  .post('/reg', async (ctx) => {
+    // 注册
     const data = await ctx.db.addTodo(ctx.request.body)
     ctx.body = successResponse(data)
   })
-  .get('/todos', async (ctx) => {
+  .get('/users', async (ctx) => {
+    // 获取用户
     const todos = await ctx.db.getAllTodos()
     ctx.body = successResponse(todos)
   })

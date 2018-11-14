@@ -51,6 +51,17 @@ const config = {
             }
           }
         ]
+      },
+      {
+        test: /\.(ttf|woff)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: 'resource/[path][name].[hash:8][ext]'
+            }
+          }
+        ]
       }
     ]
   }
