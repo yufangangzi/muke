@@ -4,12 +4,19 @@ const path = require('path')
 
 const koaBody = require('koa-body')
 // const pageRouter = require('./routers/dev-ssr')
+// var history = require('connect-history-api-fallback')
 const staticRouter = require('./routers/static')
 
-const apiRouter = require('./routers/api.js')
+const {apiRouter, singRouter, videoRouter} = require('./routers/api.js')
 
 const createDb = require('./db/db')
 const config = require('../app.config')
+
+const creatSing = require('./db/sing')
+const sing = creatSing()
+
+const creatVideo = require('./db/video')
+const video = creatVideo()
 
 const db = createDb(config.db.appId, config.db.appKey)
 const app = new Koa()
@@ -26,12 +33,15 @@ app.use(async (ctx, next) => {
     if (isDev) {
       ctx.body = err.message
     } else {
+      // next('/')
       ctx.body = 'please try again later'
     }
   }
 })
 app.use(async (ctx, next) => {
   ctx.db = db
+  ctx.sing = sing
+  ctx.video = video
   await next()
 })
 app.use(async (ctx, next) => {
@@ -45,6 +55,9 @@ app.use(koaBody())
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
+app.use(singRouter.routes()).use(singRouter.allowedMethods())
+app.use(videoRouter.routes()).use(videoRouter.allowedMethods())
+
 let pageRouter
 if (isDev) {
   pageRouter = require('./routers/dev-ssr')

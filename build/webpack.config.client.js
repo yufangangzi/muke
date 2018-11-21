@@ -79,7 +79,7 @@ if (isDev) {
     module: {
       rules: [
         {
-          test: /\.styl/,
+          test: /\.(styl)/,
           use: ExtractPlugin.extract({
             fallback: 'vue-style-loader', // 热更新中可能需要换位 vue-style-loader
             use: [
@@ -98,13 +98,22 @@ if (isDev) {
     },
     plugins: defaultPlugins.concat(
       [
-        new ExtractPlugin('style.[contentHash:8].css'),
+        new ExtractPlugin({
+          filename: 'style.[contentHash:8].css',
+          allChunks: true
+        }),
         new webpack.optimize.CommonsChunkPlugin({
           name: 'vendor'
         }),
         new webpack.optimize.CommonsChunkPlugin({
           name: 'runtime'
-        }) // 是将有关webpack 的代码单独打包出来   作用 有新的包加入的时候 可以不用变更 hash
+        }), // 是将有关webpack 的代码单独打包出来   作用 有新的包加入的时候 可以不用变更 hash
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: false,
+            drop_console: true
+          }
+        })
       ]
     )
   })

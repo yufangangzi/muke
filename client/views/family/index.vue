@@ -16,6 +16,7 @@
     },
     beforeRouteLeave (to, from, next) {
       console.log('family leave')
+      next()
       // if (global.confirm('are yoou sure')) {
       //   next()
       // }

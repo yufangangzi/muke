@@ -3,11 +3,11 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Meta from 'vue-meta'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+
 import App from './app.vue'
 import createStore from './store/store'
 import createRouter from './config/router'
-
+// import 'element-ui/lib/theme-chalk/index.css'
 import './assets/styles/globle.styl'
 import Notifycation from './views/components/notify'
 Vue.use(Notifycation)

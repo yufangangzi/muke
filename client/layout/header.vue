@@ -23,6 +23,8 @@
           </el-submenu>
           <el-menu-item index="3">消息中心</el-menu-item>
           <el-menu-item index="family">个人信息</el-menu-item>
+          <el-menu-item index="sing">唱歌</el-menu-item>
+          <el-menu-item index="video">视频</el-menu-item>
         </el-menu>
       </el-col>
     </el-row>

@@ -5,7 +5,9 @@
     </el-header>
     <el-main>
       <transition name="fade">
-        <router-view></router-view>
+        <keep-alive include="sing">
+          <router-view></router-view>
+        </keep-alive>
       </transition>
     </el-main>
     <el-footer>
