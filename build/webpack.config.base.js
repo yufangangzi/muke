@@ -39,7 +39,14 @@ const config = {
           'css-loader'
         ]
       },
-
+      {
+        test: /\.less$/,
+        use: [
+          'vue-style-loader', // 热更新中可能需要换位 vue-style-loader
+          'css-loader',
+          'less-loader'
+        ]
+      },
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [

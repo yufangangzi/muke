@@ -6,6 +6,7 @@ const koaBody = require('koa-body')
 // const pageRouter = require('./routers/dev-ssr')
 // var history = require('connect-history-api-fallback')
 const staticRouter = require('./routers/static')
+const assetsRouter = require('./routers/assets')
 
 const {apiRouter, singRouter, videoRouter} = require('./routers/api.js')
 
@@ -54,6 +55,7 @@ app.use(async (ctx, next) => {
 app.use(koaBody())
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 
+app.use(assetsRouter.routes()).use(assetsRouter.allowedMethods())
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 app.use(singRouter.routes()).use(singRouter.allowedMethods())
 app.use(videoRouter.routes()).use(videoRouter.allowedMethods())
