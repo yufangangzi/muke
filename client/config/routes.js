@@ -38,6 +38,11 @@ export default [
     // }
   },
   {
+    path: 'work',
+    name: 'work',
+    component: () => import('../views/work/index.vue')
+  },
+  {
     path: '/sing',
     name: 'sing',
     component: () => import('../views/sing/index.vue')
