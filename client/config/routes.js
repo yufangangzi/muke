@@ -38,7 +38,7 @@ export default [
     // }
   },
   {
-    path: 'work',
+    path: '/work',
     name: 'work',
     component: () => import('../views/work/index.vue')
   },
