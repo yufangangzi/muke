@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="work-main">
   <el-row class="tac">
   <el-col :span="6">
     <h5>工作列表</h5>
@@ -10,13 +10,13 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-submenu v-for="(item, index) of works" :key="index" :index="item.id">
+      <el-submenu v-for="(item, index) of works" :key="index" :index="item.pathname">
         <template slot="title">
           <i class="el-icon-menu"></i>
           <span slot="title">{{item.title}}</span>
         </template>
-        <el-menu-item-group v-if="item.component">
-          <el-menu-item v-for="(itemchild, index) of item.component" :index="itemchild.id" >{{itemchild.title}}</el-menu-item>
+        <el-menu-item-group v-if="item.children">
+          <el-menu-item v-for="(itemchild, index) of item.children" :index="itemchild.name" >{{itemchild.title}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -25,12 +25,17 @@
     <div class="contents">
       <p v-for="(item, index) of selecontents" v-html="item"></p>
     </div>
+    <div>
+      <keep-alive>
+          <router-view></router-view>
+      </keep-alive>
+    </div>
   </el-col>
 </el-row>
 </div>
 </template>
 <script>
-  import works from '../../json/work.js'
+  import {works} from '../../config/routes.js'
   import contents from '../../json/content.js'
 export default {
     data () {
@@ -43,7 +48,14 @@ export default {
     },
     methods: {
       handleSelect (key) {
-        this.selecontents = contents[key]
+        if (contents[key]) {
+          this.selecontents = contents[key]
+        } else {
+          this.selecontents = []
+          this.$router.push({
+            name: key
+          })
+        }
       }
     }
   }

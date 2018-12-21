@@ -3,7 +3,8 @@
 // 如果要异步加载对应的组件  就不使用上面直接引用的方式  在下面的 component 中使用 () => import('../views/login/index.vue')
 // 这样写的时候 需要下载个插件  babel-plugin-syntax-dynamic-import
 // import goLogin from '../views/components/login/function.js'
-export default [
+import Works from '../views/work/index.vue'
+export const app = [
   {
     path: '/',
     redirect: 'app'
@@ -22,26 +23,99 @@ export default [
         component: () => import('../views/login/index.vue')
       }
     ]
-  },
-  {
-    path: '/family',
-    name: 'family',
-    component: () => import('../views/family/index.vue')
-    // beforeEnter: (to, from, next) => {
-    //   console.log(from)
-    //   console.log(to)
-    //   if (window.localStorage.getItem('isLogin') === 'login') {
-    //     next()
-    //   } else {
-    //     goLogin({toname: to.name})
-    //   }
-    // }
-  },
-  {
-    path: '/work',
-    name: 'work',
-    component: () => import('../views/work/index.vue')
-  },
+  }
+]
+export const family = {
+  path: '/family',
+  name: 'family',
+  component: () => import('../views/family/index.vue')
+  // beforeEnter: (to, from, next) => {
+  //   console.log(from)
+  //   console.log(to)
+  //   if (window.localStorage.getItem('isLogin') === 'login') {
+  //     next()
+  //   } else {
+  //     goLogin({toname: to.name})
+  //   }
+  // }
+}
+export const worksjs = {
+  path: '/work',
+  name: 'work',
+  title: 'js',
+  pathname: 'js',
+  component: Works,
+  children: [
+    {
+      path: '/js-1',
+      title: 'JSONP的认识',
+      name: 'js-1'
+    },
+    {
+      path: '/js-2',
+      title: 'http',
+      name: 'js-2'
+    },
+    {
+      path: '/js-3',
+      title: 'CSRF',
+      name: 'js-3'
+    },
+    {
+      path: '/js-4',
+      title: '原型链的理解',
+      name: 'js-4'
+    },
+    {
+      path: '/js-5',
+      title: '原型链的继承',
+      name: 'js-5'
+    },
+    {
+      path: '/js-6',
+      title: '借用构造函数',
+      name: 'js-6'
+    },
+    {
+      path: '/js-7',
+      title: '组合继承',
+      name: 'js-7'
+    },
+    {
+      path: '/class',
+      name: 'classs',
+      title: '类',
+      component: () => import('../json/class/class.jsx')
+    },
+    {
+      path: '/promise',
+      name: 'promises',
+      title: 'promise',
+      component: () => import('../json/promise/promise.jsx')
+    }
+  ]
+}
+export const worksMain = {
+  path: '/work',
+  name: 'work',
+  pathname: 'default',
+  title: '知识总结'
+}
+export const workscss = {
+  path: '/work',
+  name: 'work',
+  pathname: 'css',
+  title: 'css'
+}
+export const works = [
+  worksMain,
+  worksjs,
+  workscss
+]
+export const routes = [
+  ...app,
+  family,
+  worksjs,
   {
     path: '/sing',
     name: 'sing',

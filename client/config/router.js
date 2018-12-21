@@ -1,6 +1,6 @@
 import Router from 'vue-router'
 
-import routes from './routes'
+import {routes} from './routes'
 
 export default () => {
   return new Router({
@@ -14,6 +14,7 @@ export default () => {
       if (savedPosition) {
         return savedPosition
       } else {
+        window.scrollTo(0, 0)
         return {x: 0, y: 0}
       }
     },

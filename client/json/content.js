@@ -3,6 +3,7 @@ import prototype from './prototype.js'
 import prototype1 from './prototype1.js'
 import prototype2 from './prototype2.js'
 import prototype3 from './prototype3.js'
+import class1 from './class.js'
 const contents = {
   'default': [
     '自己的总结'
@@ -118,4 +119,4 @@ const contents = {
     'http://www.cnblogs.com/ranyonsue/p/5984001.html'
   ]
 }
-export default Object.assign(contents, csrf, prototype, prototype1, prototype2, prototype3)
+export default Object.assign(contents, csrf, prototype, prototype1, prototype2, prototype3, class1)

@@ -1,3 +1,5 @@
+import {worksjs} from '../config/routes.js'
+console.log(worksjs)
 const works = [
   {
     id: 'default',
@@ -9,31 +11,31 @@ const works = [
     component: [
       {
         title: 'JSONP的认识',
-        id: 'js-1'
+        name: 'js-1'
       },
       {
         title: 'http',
-        id: 'js-2'
+        name: 'js-2'
       },
       {
         title: 'CSRF',
-        id: 'js-3'
+        name: 'js-3'
       },
       {
         title: '原型链的理解',
-        id: 'js-4'
+        name: 'js-4'
       },
       {
         title: '原型链的继承',
-        id: 'js-5'
+        name: 'js-5'
       },
       {
         title: '借用构造函数',
-        id: 'js-6'
+        name: 'js-6'
       },
       {
         title: '组合继承',
-        id: 'js-7'
+        name: 'js-7'
       }
     ]
   },
