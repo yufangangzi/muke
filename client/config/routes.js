@@ -92,6 +92,12 @@ export const worksjs = {
       name: 'promises',
       title: 'promise',
       component: () => import('../json/promise/promise.jsx')
+    },
+    {
+      path: '/reg',
+      name: 'reg',
+      title: 'reg',
+      component: () => import('../json/reg/reg.jsx')
     }
   ]
 }
