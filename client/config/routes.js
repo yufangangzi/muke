@@ -98,6 +98,18 @@ export const worksjs = {
       name: 'reg',
       title: 'reg',
       component: () => import('../json/reg/reg.jsx')
+    },
+    {
+      path: '/domain',
+      name: 'domain',
+      title: 'domain',
+      component: () => import('../json/crossdomain/index.jsx')
+    },
+    {
+      path: '/XSS',
+      name: 'XSS',
+      title: 'XSS',
+      component: () => import('../json/xss/index.jsx')
     }
   ]
 }

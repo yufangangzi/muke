@@ -22,8 +22,8 @@ https://blog.csdn.net/qq_22944825/article/details/78169321
 
 7、为了便于客户端使用数据，逐渐形成了一种非正式传输协议，人们把它称作JSONP，该协议的一个要点就是允许用户传递一个callback参数给服务端，然后服务端返回数据时会将这个callback参数作为函数名来包裹住JSON数据，这样客户端就可以随意定制自己的函数来自动处理返回数据了。
 
-JSONP的客户端具体实现： 
-1、我们知道，哪怕跨域js文件中的代码（当然指符合web脚本安全策略的），web页面也是可以无条件执行的。 
+JSONP的客户端具体实现：
+1、我们知道，哪怕跨域js文件中的代码（当然指符合web脚本安全策略的），web页面也是可以无条件执行的。
 远程服务器remoteserver.com根目录下有个remote.js文件代码如下：
 
 alert('我是远程文件');
@@ -90,7 +90,7 @@ remote.js文件代码如下：
 
 localHandler({"result":"我是远程js带来的数据"});
 1
-运行之后查看结果，页面成功弹出提示窗口，显示本地函数被跨域的远程js调用成功，并且还接收到了远程js带来的数据。 
+运行之后查看结果，页面成功弹出提示窗口，显示本地函数被跨域的远程js调用成功，并且还接收到了远程js带来的数据。
 很欣喜，跨域远程获取数据的目的基本实现了，但是又一个问题出现了，我怎么让远程js知道它应该调用的本地函数叫什么名字呢？毕竟是jsonp的服务者都要面对很多服务对象，而这些服务对象各自的本地函数都不相同啊？我们接着往下看。
 
 3、聪明的开发者很容易想到，只要服务端提供的js脚本是动态生成的就行了呗，这样调用者可以传一个参数过去告诉服务端 “我想要一段调用XXX函数的js代码，请你返回给我”，于是服务器就可以按照客户端的需求来生成js脚本并响应了。
@@ -112,7 +112,7 @@ localHandler({"result":"我是远程js带来的数据"});
     var script = document.createElement('script');
     script.setAttribute('src', url);
     // 把script标签加入head，此时调用开始
-    document.getElementsByTagName('head')[0].appendChild(script); 
+    document.getElementsByTagName('head')[0].appendChild(script);
     </script>
 </head>
 <body>
@@ -139,11 +139,11 @@ localHandler({"result":"我是远程js带来的数据"});
 19
 20
 21
-这次的代码变化比较大，不再直接把远程js文件写死，而是编码实现动态查询，而这也正是jsonp客户端实现的核心部分，本例中的重点也就在于如何完成jsonp调用的全过程。 
-我们看到调用的url中传递了一个code参数，告诉服务器我要查的是CA1998次航班的信息，而callback参数则告诉服务器，我的本地回调函数叫做flightHandler，所以请把查询结果传入这个函数中进行调用。 
+这次的代码变化比较大，不再直接把远程js文件写死，而是编码实现动态查询，而这也正是jsonp客户端实现的核心部分，本例中的重点也就在于如何完成jsonp调用的全过程。
+我们看到调用的url中传递了一个code参数，告诉服务器我要查的是CA1998次航班的信息，而callback参数则告诉服务器，我的本地回调函数叫做flightHandler，所以请把查询结果传入这个函数中进行调用。
 OK，服务器很聪明，这个叫做flightResult.aspx的页面生成了一段这样的代码提供给jsonp.html
 
-（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）： 
+（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）：
 HTML 代码
 
 flightHandler({
@@ -168,7 +168,7 @@ jQuery如何实现jsonp调用？
      <title>Untitled Page</title>
       <script type="text/javascript" src=jquery.min.js"></script>
       <script type="text/javascript">
-     jQuery(document).ready(function(){ 
+     jQuery(document).ready(function(){
         $.ajax({
              type: "get",
              async: false,
@@ -229,7 +229,7 @@ jQuery如何实现jsonp调用？
 总而言之，jsonp不是ajax的一个特例，哪怕jquery等巨头把jsonp封装进了ajax，也不能改变这一点！
 
 2、手写单链表查找倒数第k个节点
-1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。 
+1、为了找出倒数第k个元素，最容易想到的办法是首先遍历一遍单链表，求出整个单链表的长度n，然后将倒数第k个，转换为正数第n-k个，接下来遍历一次就可以得到结果。但是该方法存在一个问题，即需要对链表进行两次遍历，第一次遍历用于求解单链表的长度，第二次遍历用于查找正数第n-k个元素。
 这种思路的时间复杂度是O(n)，但需要遍历链表两次。
 
 2、如果我们在遍历时维持两个指针，第一个指针从链表的头指针开始遍历，在第k-1步之前，第二个指针保持不动；在第k-1步开始，第二个指针也开始从链表的头指针开始遍历。由于两个指针的距离保持在k-1，当第一个（走在前面的）指针到达链表的尾结点时，第二个指针（走在后面的）指针正好是倒数第k个结点。这种思路只需要遍历链表一次。对于很长的链表，只需要把每个结点从硬盘导入到内存一次。因此这一方法的时间效率前面的方法要高。
@@ -313,16 +313,16 @@ public class MyLinkedList {
 38
 39
 3、http请求头，请求体，cookie在哪个里面？url在哪里面？
-参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html 
-人人三面的时候问我http请求头都有哪些值，答不上来。。GG 
-客户端请求消息 
- 
-服务器响应消息 
-HTTP响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。 
+参考菜鸟教程HTTP专栏：http://www.runoob.com/http/http-tutorial.html
+人人三面的时候问我http请求头都有哪些值，答不上来。。GG
+客户端请求消息
+
+服务器响应消息
+HTTP响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。
 
 
-实例 
-下面实例是一点典型的使用GET来传递数据的实例： 
+实例
+下面实例是一点典型的使用GET来传递数据的实例：
 客户端请求：
 
 GET /hello.txt HTTP/1.1
@@ -358,32 +358,32 @@ Content-Type: text/plain
 Hello World! My payload includes a trailing CRLF.
 1
 4、原型链的解释
-饿了么面试的时候问到了，用友也问到了。没答好，GG. 
+饿了么面试的时候问到了，用友也问到了。没答好，GG.
 
 
 5、对闭包的理解，实现一个暴露内部变量，而且外部可以访问修改的函数
-闭包的作用： 
+闭包的作用：
 匿名自执行函数、缓存、实现封装（主要作用）、实现面向对象中的对象
 
-var person = function(){    
-    //变量作用域为函数内部，外部无法访问    
-    var name = "default";       
-    return {    
-       getName : function(){    
-           return name;    
-       },    
-       setName : function(newName){    
-           name = newName;    
-       }    
-    }    
-}();    
-print(person.name);//直接访问，结果为undefined    
-print(person.getName());    
-person.setName("a");    
-print(person.getName());    
-//得到结果如下：  
-undefined  
-default  
+var person = function(){
+    //变量作用域为函数内部，外部无法访问
+    var name = "default";
+    return {
+       getName : function(){
+           return name;
+       },
+       setName : function(newName){
+           name = newName;
+       }
+    }
+}();
+print(person.name);//直接访问，结果为undefined
+print(person.getName());
+person.setName("a");
+print(person.getName());
+//得到结果如下：
+undefined
+default
 a
 1
 2
@@ -406,8 +406,8 @@ a
 19
 20
 6、基本的数据类型
-5个简单数据类型（基本数据类型）+ 1个复杂数据类型 
-undefiend, number string null boolean + object 
+5个简单数据类型（基本数据类型）+ 1个复杂数据类型
+undefiend, number string null boolean + object
 ES6 新增Symbol
 
 7、基本的两列自适应布局
@@ -441,19 +441,19 @@ ES6 新增Symbol
 虽然上过linux课，但是命令忘得差不多了 尴尬。。。
 
 9、OSI模型，HTTP,TCP,UDP分别在哪些层
-这个可以参考我另一个博客： 
-http://blog.csdn.net/qq_22944825/article/details/78160659 
-OSI：物理层-数据链路层-网络层-传输层-会话层-表现层-应用层 
+这个可以参考我另一个博客：
+http://blog.csdn.net/qq_22944825/article/details/78160659
+OSI：物理层-数据链路层-网络层-传输层-会话层-表现层-应用层
 
 
 10、解释平衡二叉树，以及在数据结构中的应用（红黑树）
 11、快排的时间复杂度和空间复杂度
-一个特别好的总结的博客： 
-http://web.jobbole.com/87968/ 
+一个特别好的总结的博客：
+http://web.jobbole.com/87968/
 
 
 12、手写一个jQuery插件
-1、$.extend(src) 
+1、$.extend(src)
 　　该方法就是将src合并到jquery的全局对象中去，如：
 
  $.extend({
@@ -462,7 +462,7 @@ http://web.jobbole.com/87968/
 1
 2
 3
-2、$.fn.extend(src) 
+2、$.fn.extend(src)
 　　该方法将src合并到jquery的实例对象中去，如:
 
  $.fn.extend({
@@ -495,11 +495,11 @@ jQuery对象是一个特殊的集合对象。即使只有一个元素，jQuery�
 14、手写一个递归函数
  function fact(num) {
     if (num <= 1) {
-        return 1;             
+        return 1;
     } else {
-        return num * fact(num - 1);            
+        return num * fact(num - 1);
     }
-} 
+}
 1
 2
 3
@@ -509,21 +509,21 @@ jQuery对象是一个特殊的集合对象。即使只有一个元素，jQuery�
 7
 以下代码可导致出错：
 
-var anotherFact = fact; 
- fact = null; 
- alert(antherFact(4)); //出错 
+var anotherFact = fact;
+ fact = null;
+ alert(antherFact(4)); //出错
 1
 2
 3
-由于fact已经不是函数了，所以出错。 
-用arguments.callee可解决问题，这是一个指向正在执行的函数的指针,arguments.callee返回正在被执行的对现象。 
+由于fact已经不是函数了，所以出错。
+用arguments.callee可解决问题，这是一个指向正在执行的函数的指针,arguments.callee返回正在被执行的对现象。
 新的函数为：
 
 function fact(num) {
             if (num <= 1) {
                 return 1;
             } else {
-                return num * arguments.callee(num - 1); //此处更改了。 
+                return num * arguments.callee(num - 1); //此处更改了。
             }
 }
 var anotherFact = fact;
@@ -558,23 +558,23 @@ history 是 HTML5 才有的新 API，可以用来操作浏览器的 session hist
 
 H5还新增了一个hashchange事件，也是很有用途的一个新事件：
 
-当页面hash(#)变化时，即会触发hashchange。锚点Hash起到引导浏览器将这次记录推入历史记录栈顶的作用，window.location对象处理“#”的改变并不会重新加载页面，而是将之当成新页面，放入历史栈里。并且，当前进或者后退或者触发hashchange事件时，我们可以在对应的事件处理函数中注册ajax等操作！ 
+当页面hash(#)变化时，即会触发hashchange。锚点Hash起到引导浏览器将这次记录推入历史记录栈顶的作用，window.location对象处理“#”的改变并不会重新加载页面，而是将之当成新页面，放入历史栈里。并且，当前进或者后退或者触发hashchange事件时，我们可以在对应的事件处理函数中注册ajax等操作！
 但是hashchange这个事件不是每个浏览器都有，低级浏览器需要用轮询检测URL是否在变化，来检测锚点的变化。当锚点内容(location.hash)被操作时，如果锚点内容发生改变浏览器才会将其放入历史栈中，如果锚点内容没发生变化，历史栈并不会增加，并且也不会触发hashchange事件。
 
 16、介绍一下webpack和gulp，以及项目中具体的使用
 17、你对es6的了解
-参见阮大大的博客 
+参见阮大大的博客
 http://es6.ruanyifeng.com/
 
 18、解释一下vue和react，以及异同点
-异同点：vue官网给过答案 
+异同点：vue官网给过答案
 https://cn.vuejs.org/v2/guide/comparison.html
 
 只简单的用过vue，用vue写了一个日程表，请赐教哦~
 
 https://yyywwwqqq.coding.me/schedule/dist/
 
-源码地址： 
+源码地址：
 https://coding.net/u/yyywwwqqq/p/schedule/git
 
 19、关于平衡二叉树
@@ -582,15 +582,15 @@ https://coding.net/u/yyywwwqqq/p/schedule/git
 
 20、前后端分离的意义以及对前端工程化的理解
 21、使用css实现一个三角形
-利用border去画~ 
-先看一下border的布局，如图： 
- 
-所以三角形： 
-1.设置宽度、高度为0 
- 
-2.不设置border-top 
- 
-3.设置左右border颜色为transparent–透明 
+利用border去画~
+先看一下border的布局，如图：
+
+所以三角形：
+1.设置宽度、高度为0
+
+2.不设置border-top
+
+3.设置左右border颜色为transparent–透明
 
 
 22、用promise手写ajax
@@ -604,7 +604,7 @@ function getJson(url){
                     resolve(this.responseText, this)
                 }else{
                     var resJson = { code: this.status, response: this.response }
-                    reject(resJson, this)    
+                    reject(resJson, this)
                 }
             }
         }
@@ -687,7 +687,7 @@ getJSON('/api/v1/xxx')    // => 这里面是就try
 45
 46
 23、手写一个类的继承，并解释一下
-继承的形式有很多中，js高程里面归纳了其中，我简单说一下前三种。 
+继承的形式有很多中，js高程里面归纳了其中，我简单说一下前三种。
 1.原型继承
 
 function Parent(){
@@ -736,15 +736,15 @@ cat.eat();
 7
 8
 9
-缺点是： 
+缺点是：
 3.组合继承
 
 24、解释一下call函数和apply函数的作用，以及用法
-改变this的指向。 
-this的指向问题，在你不知道的js这本书中（神书）做了四点归纳： 
-1.默认绑定 （指 直接调用 foo(), this指向window） 
-2.隐式绑定（obj.foo(), this指向obj 这里会出现很多坑，下面的问题应该会有解答） 
-3.显示绑定（利用call、apply、bind改变this） 
+改变this的指向。
+this的指向问题，在你不知道的js这本书中（神书）做了四点归纳：
+1.默认绑定 （指 直接调用 foo(), this指向window）
+2.隐式绑定（obj.foo(), this指向obj 这里会出现很多坑，下面的问题应该会有解答）
+3.显示绑定（利用call、apply、bind改变this）
 4.new（var cat = new Animal() , this指向cat对象）
 
 25、你说自己抗压能力强，具体表现在哪里？
@@ -793,11 +793,11 @@ function deepCopy(obj){
 14
 39、for函数里面setTimeout异步问题
 40、手写归并排序
-<1>.长度为n(n>1),把该输入序列分成两个长度为n/2的子序列； 
-<2>.对这两个子序列分别采用归并排序，直到长度n小于2； 
+<1>.长度为n(n>1),把该输入序列分成两个长度为n/2的子序列；
+<2>.对这两个子序列分别采用归并排序，直到长度n小于2；
 <3>.将两个排序好的子序列合并成一个最终的排序序列。
 
-function mergeSort(arr) { 
+function mergeSort(arr) {
     var len = arr.length;
     if(len < 2) {
         return arr;
@@ -856,8 +856,8 @@ function merge(left, right) {
 参考42题中的merge函数。
 
 43、手写一个原生ajax
-ajax：一种请求数据的方式，不需要刷新整个页面； 
-ajax的技术核心是 XMLHttpRequest 对象； 
+ajax：一种请求数据的方式，不需要刷新整个页面；
+ajax的技术核心是 XMLHttpRequest 对象；
 ajax 请求过程：创建 XMLHttpRequest 对象、连接服务器、发送请求、接收响应数据；
 
 一个在stackoverflow的高分回答结合上面的代码，给出get和post的两种不同请求方法：
@@ -1035,7 +1035,7 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 
 55、画出盒子模型，要使谷歌浏览器的盒子模型显示得跟IE浏览器一致（让谷歌跟ie一致，不是ie跟谷歌一致），该怎么做？
 
-56、手写JS实现类继承，讲原型链原理，并解释new一个对象的过程都发生了什么
+56、手写JS实现类继承，讲原型链原理，并解释new一个对象的过程都发生了什么xss
 
 57、Array对象自带的方法，一一列举
 
@@ -1492,8 +1492,8 @@ ajax.post('/test.php', {foo: 'bar'}, function(response,xml) {
 287、页面加载过程
 
 288、浏览器如何实现图片缓存
---------------------- 
-作者：傻傻的鱼 
-来源：CSDN 
-原文：https://blog.csdn.net/qq_22944825/article/details/78169321 
+---------------------
+作者：傻傻的鱼
+来源：CSDN
+原文：https://blog.csdn.net/qq_22944825/article/details/78169321
 版权声明：本文为博主原创文章，转载请附上博文链接！
