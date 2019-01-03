@@ -110,6 +110,12 @@ export const worksjs = {
       name: 'XSS',
       title: 'XSS',
       component: () => import('../json/xss/index.jsx')
+    },
+    {
+      path: '/bind',
+      name: 'bind',
+      title: 'bind',
+      component: () => import('../json/bind/bind.jsx')
     }
   ]
 }
