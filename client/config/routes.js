@@ -116,6 +116,12 @@ export const worksjs = {
       name: 'bind',
       title: 'bind',
       component: () => import('../json/bind/bind.jsx')
+    },
+    {
+      path: '/copy',
+      name: 'copy',
+      title: 'copy',
+      component: () => import('../json/copy/copy.jsx')
     }
   ]
 }
