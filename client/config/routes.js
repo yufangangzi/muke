@@ -122,6 +122,18 @@ export const worksjs = {
       name: 'copy',
       title: 'copy',
       component: () => import('../json/copy/copy.jsx')
+    },
+    {
+      path: '/link',
+      name: 'link',
+      title: 'link',
+      component: () => import('../json/linkimport/index.jsx')
+    },
+    {
+      path: '/webpack',
+      name: 'webpack',
+      title: 'webpack',
+      component: () => import('../json/webpack4/index.jsx')
     }
   ]
 }
