@@ -41,8 +41,9 @@ export default {
           <h5>多进多出</h5>
           <div>entry传入对象，key称之为chunk，将不同入口文件分别打包到不同的js。</div>
           <div>output.filename改为用中括号占位来命名，从而生成多个文件，name是entry中各个chunk，具体可参考<a href="https://doc.webpack-china.org/configuration/output#output-filename" target="_blank" rel="nofollow">官方文档</a>
-            <img src='/assets/images/webpack/webpack-3.png' alt=''></img>
+
           </div>
+          <img src='/assets/images/webpack/webpack-3.png' alt=''></img>
           <div>PS. 在output中，还有一个叫publicPath非常重要，设置不正确会导致生成错的引用路径，从而找不到资源。这里先不展开，后面结合图片处理再细述。</div>
           <h5>清空某目录或子目录及文件</h5>
           <div>这里先插入一个实用功能，因为在每次打包后，dist目录都有无用文件残留，最好每次打包前都清空dist目录。</div>
