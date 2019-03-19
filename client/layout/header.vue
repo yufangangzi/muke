@@ -8,7 +8,7 @@
           mode="horizontal"
           @select="handleSelect"
           active-text-color="#ffd04b">
-          <el-menu-item index="1">处理中心</el-menu-item>
+          <el-menu-item index="1">班级信息</el-menu-item>
           <el-menu-item index="work">工作台</el-menu-item>
           <el-menu-item index="family">个人信息</el-menu-item>
           <el-menu-item index="sing">唱歌</el-menu-item>

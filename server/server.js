@@ -8,7 +8,7 @@ const koaBody = require('koa-body')
 const staticRouter = require('./routers/static')
 const assetsRouter = require('./routers/assets')
 
-const {apiRouter, singRouter, videoRouter} = require('./routers/api.js')
+const {apiRouter, singRouter, videoRouter, userRouter} = require('./routers/api.js')
 
 const createDb = require('./db/db')
 const config = require('../app.config')
@@ -18,6 +18,9 @@ const sing = creatSing()
 
 const creatVideo = require('./db/video')
 const video = creatVideo()
+
+const createUser = require('./db/user')
+const user = createUser()
 
 const db = createDb(config.db.appId, config.db.appKey)
 const app = new Koa()
@@ -43,6 +46,7 @@ app.use(async (ctx, next) => {
   ctx.db = db
   ctx.sing = sing
   ctx.video = video
+  ctx.user = user
   await next()
 })
 app.use(async (ctx, next) => {
@@ -59,6 +63,7 @@ app.use(assetsRouter.routes()).use(assetsRouter.allowedMethods())
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 app.use(singRouter.routes()).use(singRouter.allowedMethods())
 app.use(videoRouter.routes()).use(videoRouter.allowedMethods())
+app.use(userRouter.routes()).use(userRouter.allowedMethods())
 
 let pageRouter
 if (isDev) {

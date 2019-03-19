@@ -2,12 +2,30 @@ const Router = require('koa-router')
 const apiRouter = new Router({prefix: '/api'})
 const singRouter = new Router({prefix: '/mobileWeb'})
 const videoRouter = new Router({prefix: '/video'})
+const userRouter = new Router({prefix: '/user'})
 const successResponse = (data) => {
   return {
     success: true,
     data
   }
 }
+userRouter
+  .post('/getUser', async (ctx) => {
+    const data = await ctx.user.getUsers()
+    ctx.body = successResponse(data)
+  })
+  .post('/addUser', async (ctx) => {
+    const data = await ctx.user.addUser(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
+  .post('/deleteUser', async (ctx) => {
+    const data = await ctx.user.deleteUser(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
+  .post('/updateUser', async (ctx) => {
+    const data = await ctx.user.updateUser(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
 apiRouter
   .post('/reg', async (ctx) => {
     // 注册
@@ -34,4 +52,4 @@ videoRouter
     const data = await ctx.video.getVideoList()
     ctx.body = successResponse(data)
   })
-module.exports = {apiRouter, singRouter, videoRouter}
+module.exports = {apiRouter, singRouter, videoRouter, userRouter}
