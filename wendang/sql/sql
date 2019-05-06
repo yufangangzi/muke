@@ -138,3 +138,14 @@ ln -s /usr/local/mysql/bin/mysql /usr/bin
 http://www.cnblogs.com/shibaxiong/p/5929767.html
 
 SELECT * FROM TABLE WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT 0,10
+
+
+常用命令
+1 SELECT VERSION() 显示当前的服务器版本
+2 SELECT NOW() 显示日期
+3 SELECT USER() 显示当前用户
+规范
+1 关键字和函数名全部大写
+2 数据库名称，表名称，字段名称全部小写
+3 SQL语句必须以分号结尾
+

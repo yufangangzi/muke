@@ -1,0 +1,60 @@
+在JS中，这三者都是用来改变函数的this对象的指向的，他们有什么样的区别呢。
+在说区别之前还是先总结一下三者的相似之处：
+1、都是用来改变函数的this对象的指向的。
+2、第一个参数都是this要指向的对象。
+3、都可以利用后续参数传参。
+
+不同的地方是传参数的方式不一样
+
+对于call来说是这样的
+xw.say.call(xh,"实验小学","六年级");
+
+而对于apply来说是这样的
+xw.say.apply(xh,["实验小学","六年级郑州牛皮癣医院"]);
+
+bind返回的仍然是一个函数，所以我们还可以在调用的时候再进行传参。
+xw.say.bind(xh)("实验小学","六年级");
+
+用call 和 apply  实现bind函数
+
+Function.prototype.myBind  = function () {
+  var _this = this;
+  var context = [].shift.call(arguments);
+  var args = [].slice.call(arguments)
+  return function () {
+    return _this.apply(context,[].contant.call(args,[].slice.call(arguments)))
+  }
+}
+Function.prototype.myCall = function(context) {
+    //第一个参数为调用call方法的函数中的this指向
+    var context = context || global;
+    //将this赋给context的fn属性
+    context.fn = this;//此处this是指调用myCall的function
+
+    var arr = [];
+    for (var i=0,len=arguments.length;i<len;i++) {
+        arr.push("arguments[" + i + "]");
+    }
+    //执行这个函数，并返回结果
+    var result = eval("context.fn(" + arr.toString() + ")");
+    //将this指向销毁
+    delete context.fn;
+    return result;
+}
+Function.prototype.myApply = function(context, arr) {
+    var context = context || global;
+    context.fn = this;
+    var result;
+    if (!arr) {
+        result = context.fn(); //直接执行
+    } else {
+        var args = [];
+        for (var i=0,len=arr.length;i<len;i++) {
+            args.push("arr[" + i + "]");
+        }
+        result = eval("context.fn([" + args.toString() + "])");
+    }
+    //将this指向销毁
+    delete context.fn;
+    return result;
+}

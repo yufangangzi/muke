@@ -1,0 +1,17 @@
+在vue 的history 模式下 刷新会有404的表现，
+在开发环境下
+需要在webpack配置项中的devServer加上
+historyApiFallback: {
+	index: '/index.html' //与output的publicPath有关(HTMLplugin生成的html默认为index.html)
+},
+
+在 nginx 的配置文件中需要添加
+server {
+    listen       8002;
+    server_name shianlian;
+    location / {
+      root  shianlian;
+      index  index.html index.htm;
+      try_files $uri $uri/ /index.html; //这个是将请求路径默认指定到前端路由的页面下
+    }
+}

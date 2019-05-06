@@ -11,7 +11,7 @@ module.exports = () => {
     async addUser (data) {
       console.log(data)
       return new Promise((resolve, reject) => {
-        db.query(`INSERT INTO user(NAME,age) VALUES("${data.name}",${data.age})`, function (val) {
+        db.query(`INSERT INTO user(NAME,age,uid) VALUES("${data.name}",${data.age})`, function (val) {
           resolve(val)
         })
       })
