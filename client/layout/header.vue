@@ -13,6 +13,7 @@
           <el-menu-item index="family">个人信息</el-menu-item>
           <el-menu-item index="sing">唱歌</el-menu-item>
           <el-menu-item index="video">视频</el-menu-item>
+          <el-menu-item index="viewpage">随手笔记</el-menu-item>
         </el-menu>
       </el-col>
     </el-row>

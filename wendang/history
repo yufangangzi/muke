@@ -1,5 +1,5 @@
-在vue 的history 模式下 刷新会有404的表现，
-在开发环境下
+在vue 的history 模式下 刷新会有404的表现
+在开发环境下,
 需要在webpack配置项中的devServer加上
 historyApiFallback: {
 	index: '/index.html' //与output的publicPath有关(HTMLplugin生成的html默认为index.html)

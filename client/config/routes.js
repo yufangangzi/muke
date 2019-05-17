@@ -29,15 +29,11 @@ export const family = {
   path: '/family',
   name: 'family',
   component: () => import('../views/family/index.vue')
-  // beforeEnter: (to, from, next) => {
-  //   console.log(from)
-  //   console.log(to)
-  //   if (window.localStorage.getItem('isLogin') === 'login') {
-  //     next()
-  //   } else {
-  //     goLogin({toname: to.name})
-  //   }
-  // }
+}
+export const viewpage = {
+  path: '/viewpage',
+  name: 'viewpage',
+  component: () => import('../views/viewpage/index.vue')
 }
 export const worksjs = {
   path: '/work',
@@ -157,6 +153,7 @@ export const works = [
 export const routes = [
   ...app,
   family,
+  viewpage,
   worksjs,
   {
     path: '/sing',

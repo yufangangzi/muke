@@ -3,12 +3,22 @@ const apiRouter = new Router({prefix: '/api'})
 const singRouter = new Router({prefix: '/mobileWeb'})
 const videoRouter = new Router({prefix: '/video'})
 const userRouter = new Router({prefix: '/user'})
+const zhiShiKuRouter = new Router({prefix: '/zhishiku'})
 const successResponse = (data) => {
   return {
     success: true,
     data
   }
 }
+zhiShiKuRouter
+  .post('/getname', async (ctx) => {
+    const data = await ctx.zhishiku.getview(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
+  .post('/getFiles', async (ctx) => {
+    const data = await ctx.zhishiku.filesGet(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
 userRouter
   .post('/getUser', async (ctx) => {
     const data = await ctx.user.getUsers()
@@ -52,4 +62,4 @@ videoRouter
     const data = await ctx.video.getVideoList()
     ctx.body = successResponse(data)
   })
-module.exports = {apiRouter, singRouter, videoRouter, userRouter}
+module.exports = {apiRouter, singRouter, videoRouter, userRouter, zhiShiKuRouter}

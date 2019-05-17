@@ -42,6 +42,7 @@
 </template>
 <script>
   import {getUser, addUser, deleteUser, updateUser} from '../../api/user.js'
+
   export default {
     beforeRouteEnter (to, from, next) {
       console.log('todo enter')
@@ -122,7 +123,7 @@
     },
     mounted () {
       console.log('7777')
-      this.getUsers()
+      // this.getUsers()
     }
   }
 </script>
