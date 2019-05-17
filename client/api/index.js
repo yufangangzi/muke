@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-const request = axios.create({
-  baseURL: 'http://localhost:3333'
-})
+const request = axios.create()
 request.interceptors.request.use(config => {
   return config
 }, error => {
