@@ -17,6 +17,7 @@
       <el-col :span="20">
         <div style='white-space:pre; padding:20px' v-html="page"></div>
       </el-col>
+
     </el-row>
   </div>
 </template>
@@ -37,9 +38,12 @@ export default {
     getPage (path) {
       const data = {viewname: path || 'history'}
       getView(data).then(res => {
+        console.log(res)
         if (res.success) {
-          // const reg = /\r\n/g
           const pg = res.data.replace(/\n/g, '<br>')
+          this.page = pg
+        } else {
+          const pg = `<img src="${res}" alt="">`
           this.page = pg
         }
       })

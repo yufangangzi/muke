@@ -13,7 +13,14 @@ const successResponse = (data) => {
 zhiShiKuRouter
   .post('/getname', async (ctx) => {
     const data = await ctx.zhishiku.getview(ctx.request.body)
-    ctx.body = successResponse(data)
+    if (ctx.request.header.tupiantype === 'tupian') {
+      let prefix = 'data:png' + ';base64,'
+      let base64 = Buffer.from(data, 'binary').toString('base64')
+      let body = prefix + base64
+      ctx.body = body
+    } else {
+      ctx.body = successResponse(data.toString())
+    }
   })
   .post('/getFiles', async (ctx) => {
     const data = await ctx.zhishiku.filesGet(ctx.request.body)

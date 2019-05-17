@@ -10,7 +10,7 @@ module.exports = {
         if (err) {
           console.log(err)
         } else {
-          resolve(data.toString())
+          resolve(data)
         }
       })
     })

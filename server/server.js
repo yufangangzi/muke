@@ -37,6 +37,9 @@ app.use(async (ctx, next) => {
   if (ctx.request.method === 'OPTIONS') {
     ctx.set('Access-Control-Max-Age', 86400000)
   }
+  // if (ctx.request.header.selftype === 'foobar') {
+  //   ctx.set('Context-Type', 'image/jpeg')
+  // }
   // ctx.set("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, POST, DELETE");
   // ctx.set("Access-Control-Allow-Headers", "x-requested-with, accept, origin, content-type");
   await next()
