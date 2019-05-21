@@ -1,0 +1,225 @@
+Map
+ES6提供了Map数据结构，它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值，包括对象都可以当作键。
+即，Object结构提供了 字符串-值 的对应，Map结构提供了 值-值 的对应，是一种更完善的Hash结构实现。
+Map的数据形式是一个二维数组，一种红黑树的数据结构，键是唯一的。
+Map语法
+如何新建Map对象
+# 初始化
+let key1 = 12;
+let value1 = 'test';
+let m_1 = new Map();
+let m_2 = new Map([[key1, value1]]);
+
+其他的属性和方法如下表格所示
+
+
+
+属性/方法
+作用
+例子
+
+
+
+
+size
+返回成员数量
+
+m_1.size 结果为 0
+
+
+clear()
+清空所有成员，无返回值
+m_1.clear()
+
+
+has(key)
+判断是否存在指定成员，返回值为 true / false
+m_1.has(key)
+
+
+get(key)
+获取指定成员的值，如不存在则返回 undefined
+
+m_1.get(key)
+
+
+set(key, value)
+为key设置键值，如已经存在该key则更新，否则添加新元素，返回值是实例本身
+m_1.set(key, value)
+
+
+delete(key)
+删除key的键值对，返回值为 true / false
+m_1.delete(key)
+
+
+
+如何遍历Map对象
+# 使用 forEach
+对象.forEach(function (value, key/index, 对象本省){
+    // 对象的每个元素都将执行...
+    // 针对Map对象，函数的变量就是元素的value、元素的key、整个对象
+    // 针对Array对象，函数的变量就是元素的value、元素的索引（从0开始）、整个对象
+});
+
+# 使用 for
+for (let [key, value] of m_1) {
+    // key和value就是Map对象某个元素的key与value
+}
+
+Map使用上需要警惕的地方
+Map对象的键为应用类型的时候，例如键为一个Array对象，在这样的场景下，Map只有对同一个对象的引用，才将其视为同一个键，也就是根据内存来寻址的，例如如下例子，set和get的键表面上是同一个值，但是实际上存放的内存不一样，所以get返回undefined
+m_1.set([], 1);
+m_1.get([]);  // 返回值为 undefined
+
+那么如果我们想要获取到set指定的变量怎么办呢？也就是需要知道set指定的键存放的内存地址在哪里，显然我们需要对其进行存储，如下例子
+let key_1 = [];
+let key_2 = [];
+
+m_1.set(key_1, 1)
+   .set(key_2, 2);
+
+m_1.get(key_1);  // 返回值为 1
+m_1.get(key_2);  // 返回值为 2
+
+Map与其他类型的数据的转换
+Map 转为 Array
+使用扩展运算符 ...，例如如下例子
+let m_1 = new Map([[1, 'name'], ['name', 'js']]);
+[...m_1];  // 返回值为 [[1,"name"],["name","js"]]
+
+Array 转为 Map
+将数组转入Map构造函数中，初始化的时候就可以进行转换，注意这里的数组需要是一个二位数组才可以，并且如果该数组中有元素的key相同的情况，后面的元素的value会覆盖前面的，例如
+let arr = [[1, 12], [1, 24], ['name', 'ji'], ['name', 'js']];
+let arr_to_m = new Map(arr);
+arr_to_m  // 返回值为 Map(2) {1 => 24, "name" => "js"}
+
+Map转为对象
+上面说到了对象是key为string类型的键值对，所以如果Map所有元素的key为string类型时，是可以进行Map转化为对象的操作的，具体如下
+function strmap_to_object (strmap) {
+    let obj = {};
+    for (let [key, value] of strmap) {
+        obj[key] = value;
+    }
+    return obj;
+}
+
+let strmap = new Map([['name', 'js'], ['age', 18]]);
+strmap_to_object(strmap);  // 返回值为 {name: "js", age: 18}
+
+对象转为Map
+和上面操作反着来，可以实现对象转化为Map的操作，具体如下
+function object_to_strmap (obj) {
+    let obj_keys = Object.keys(obj);
+    let strmap = new Map();
+
+    for (let item of obj_keys) {
+        strmap.set(item, obj[item]);
+    }
+    return strmap;
+}
+
+let obj = {name: 'js', age: 18}
+object_to_strmap(obj);  // 返回值为 Map(2) {"name" => "js", "age" => 18}
+
+Map转为JSON
+Map转为JSON，建议是将其转化为Array之后，再使用 JSON.stringify 函数来实现转换，这样可以保证Map中的键为任何类型的情况
+JSON转化为Map
+JSON转化为Map这要区分一下情况，如果该JSON串是一个Array的话，且满足二维数组，那么可以直接使用Map在定义的时候进行初始化；如果该JSON串是一个对象的话，需要先转化为对象，然后使用上述关于 对象转为Map 中提到的方法
+Set
+ES6提供了Set数据结构，它类似于数组，但是存储的元素都是唯一的，这里的唯一指的是他们存储的内存位置是唯一。
+Set语法
+如何新建Set对象
+# 初始化
+let ele = 12;
+let s_1 = new Set();
+let s_2 = new Set([ele]);
+
+其他的属性和方法如下表格所示
+
+
+
+属性/方法
+作用
+例子
+
+
+
+
+size
+返回成员数量
+
+s_1.size 结果为 0
+
+
+clear()
+清空所有成员，无返回值
+s_1.clear()
+
+
+has(ele)
+判断是否存在指定成员，返回值为 true / false
+s_1.has(ele)
+
+
+add(ele)
+添加元素ele，如果已经存在，没有变动，否则添加，返回值是实例本身
+s_1.add(ele)
+
+
+delete(ele)
+删除某个值，返回值为 true / false
+s_1.delete(ele)
+
+
+
+如何遍历Set对象
+# 使用 forEach
+对象.forEach(function (value, key/index, 对象本省){
+    // 对象的每个元素都将执行...
+    // 针对Set对象，函数的变量就是元素的value、元素的key、整个对象，其中Set对象的key和value相同而已
+    // 针对Array对象，函数的变量就是元素的value、元素的索引（从0开始）、整个对象
+});
+
+# 使用 for
+for (let ele of s_1) {
+    // ele是Set对象的元素值
+}
+
+# 使用Set对象的遍历器
+对象.keys()  // 返回对象的所有key组成的一个遍历器
+对象.values()  // 返回对象的所有value组成的一个遍历器
+对象.entries()  // 返回对象的所有[key, value]组成的一个遍历器
+
+Set使用上需要警惕的地方
+由于Set中元素的独一无二，根据内存地址来进行判断，所以如果有多个元素是引用型的话，尽管值相同，但是内存地址不同，那么在Set对象中也将会存储多份，和Map类似
+Set的其他操作
+实现Set的并集和交集
+Set对象可以通过扩展运算符 ... 快速的实现转为Array，那么这样我就可以实现Set的并集了，例如
+let s_1 = new Set([12, 34, 45]);
+let s_2 = new Set([12, 33, 44]);
+
+let union_set = new Set([...s_1, ...s_2]); // 实现并集 s_1 u s_2
+let intersect_set = new Set([...a].filter(x => s_2.has(x)));  // 实现交集 s_1 n s_2
+
+实现Set的更新
+如果想在遍历的过程中，同步改变原来的Set结构，目前没有直接的方法，可以通过如下两种方法来实现，但是其实都是创建了一个新的Set，然后复制给原来的Set变量
+# 利用原Set结构映射出一个新的结构
+let s_1 = new Set([1]);
+s_1 = new Set([...s_1].map(x => opt(x)));
+
+# 利用 Array.from 方法
+let s_1 = new Set([1]);
+s_1 = new Set(Array.from(s_1, x => opt(x)));
+
+其他
+在讲述Map和Set的时候，都用到了扩展运算符 ...，这里着重说明一下该运算符，它的功能是将一个数组转为用逗号分隔的参数序列，主要用于函数调用，例如数组的合并，如下，但是有一个局限性，就是被合并数组 arr_2 元素个数不能太大，大致是 100, 000会有问题 参考
+let arr_1 = [1, 2, 3];
+let arr_2 = [1, 4, 5];
+arr_1.push(...arr_2);
+arr_1 // 返回值为 [1, 2, 3, 1, 4, 5]
+
+// 另外上面的这种合并，还可以使用如下两种方法
+arr_1.push.apply(arr_1, arr_2);
+Array.prototype.push.apply(arr_1, arr_2);
+

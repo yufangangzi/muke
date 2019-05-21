@@ -1,0 +1,34 @@
+function f1(x){ return x*2 }
+function f2(x){ return x+2 }
+function f3(x){ return Math.pow(x,2) }
+
+compose 函数就是将多个函数作为参数 依次执行  上一个函数的返回值是下一个函数的参数
+我们来看看compose是怎么实现的。
+
+https://github.com/reactjs/redux/blob/v3.7.2/src/compose.js
+
+export default function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) => (...args) => a(b(...args)))
+}
+--------------------------------------------------------
+下面这个是从左到右的
+
+function chained(...funcs) {
+    if (funcs.length === 0) {
+       return arg => arg
+    }
+
+    if (funcs.length === 1) {
+      return funcs[0]
+    }
+
+    return funcs.reduceRight((a, b) => (...args) => a(b(...args)))
+}

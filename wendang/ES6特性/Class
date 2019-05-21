@@ -1,0 +1,146 @@
+ES6中提供了class关键字，对"类"的支持越来越接近面对对象语言。我们看下它是怎么使用的。
+class Person
+  {  
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+        sayName(){
+            console.log("object name:"+this.name);
+        }
+  }
+  var person = new Person("tcy",20);
+  person.sayName();//object name:tcy
+class关键字定义Person这个类，constructor为该类的构造方法，如果不定义构造方法，则默认增加一个;sayName为类方法，注意，该方法不需要增加function标识。使用new创建一个实例对象person时，会自动调用constructor构造方法，传入入参，返回实例对象，this指向的就是该实例对象。
+类方法其实就是原型方法，等价于：
+Person.prototype ={
+    constructor(){},
+    sayName(){}
+   }
+
+
+私有方法和属性
+事实上，ES6也没有提供私有方法和需求的方法，只能通过变通的方式。
+那么对于私有的方法和属性的标准是什么呢，需要满足一下要求
+1、 class内部不同方法间可以使用，因此this要指向实例化对象（必须）
+2 、不能被外部访问，因此实例化对象person.name既不能获得值，也不能设定值，应该返回undefined，甚至应该在实例化之后，并不知道有name这个属性存在，（必须）
+3 不能被继承，因此extends后子类不具备该属性（必须）
+4 方便的调用方式，比如类this._name形式（备选）
+const _name = Symbol('name');
+const _age = Symbol('age');
+class Person {
+  constructor(name, age) {
+    this[_name] = name;
+    this[_age] = age;
+  }
+   sayName(){
+      console.log("object name:"+this[_name]);
+   }
+}
+
+var person = new Person("tcy",20);
+person.sayName();
+person._name;//undefined
+我们利用Symbol值的唯一性，将私有属性的名字命名为一个Symbol值，这个属性能在类内部访问(sayName能调用name属性)，但是无法被实例对象访问(person._name为undefined)。实际上这种方法是有缺陷的，我们后面会讲到。
+
+理论上讲，私有属性和私有方法的区别是，私有方法是函数，实现私有属性的方式也是适合私有方法的。
+
+const _name = Symbol('name');
+const _age = Symbol('age');
+const _sayName = Symbol('sayName');
+class Person {
+  constructor(name, age) {
+    this[_name] = name;
+    this[_age] = age;
+  }
+  //私有方法
+   [_sayName](){
+      console.log("object name:"+this[_name]);
+   }
+   //共有方法
+   sayName(){
+    this[_sayName]();
+   }
+}
+
+var person = new Person("tcy",20);
+person.sayName();//object name:tcy
+person._sayName();//报错
+person._name;//undefined
+
+
+静态属性和方法
+类方法前加上static关键字，表示这个方法可以用类直接调用，而无需使用类对象，该方法就是静态方法
+
+class Person
+  {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+       static sayName(){
+            console.log("this is static functon");
+        }
+  }
+  Person.sayName();
+由于不用类对象调用，所以也就无法用到this(如用到，也是指类)。
+
+那么对于静态属性，是不是可以在属性前增加static表示呢，很遗憾，不可以。ES6对于类的属性实现只有两种方式表示
+
+var sex = 0
+  class Person
+  {  
+        //第一种，最常用的，在constructor,使用.操作符
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+
+
+        //第二种，使用get set来定义属性
+        get sex() {
+            return sex
+        }
+        set sex(value) {
+           sex = value
+        }
+
+
+       static sayName(){
+            console.log("this is static functon");
+        }
+  }
+  Person.sayName();
+  var person = new Person("tcy",20);
+  person.sex = 1;
+  console.log(person.sex);//1
+
+第一种，是最常用的，在constructor,使用.操作符；第二种，使用get set来定义属性，有点曲线救国的意思。
+
+我们可以利用第二种方式，变通实现私有属性。
+
+var sex = 0
+  class Person
+  {
+        //第一种，最常用的，在constructor,使用.操作符
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+        }
+
+        //第二种，使用get set来定义属性
+        static get sex() {
+            return sex
+        }
+        static set sex(value) {
+           sex = value
+        }
+
+       static sayName(){
+            console.log("this is static functon");
+        }
+  }
+  Person.sayName();
+  Person.sex = 1;
+  console.log(Person.sex);//1
+

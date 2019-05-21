@@ -1,0 +1,94 @@
+reduce()方法是处理数组的方法，它接收一个函数和一个初始值，然后将数组中的每个元素和初始值当作参数传入这个函数中进行处理，最后返回和初始值相同类型的值。
+例如，将某个值减去数组中的每个元素：
+
+var items = [5, 10, 15];
+var reducer = function minus(minusSum, item) {
+    return minusSum - item;
+}
+var total = items.reduce(reducer, 61);
+console.log(total); // 31
+
+上例中初始值为number类型，所以返回的结果也是number类型的，如果我们想返回object类型的值，也可以传入object类型的初始值。
+
+var items = [5, 10, 15];
+var reducer = function minus(minusSum, item) {
+    minusSum.sum = minusSum.sum - item;
+    return minusSum;
+}
+var total = items.reduce(reducer, {sum: 61});
+console.log(total); // {sum: 31}
+
+以上两例都是reduce()简单的用法。reduce()是一个很强大的方法，我们还可以用它来处理更复杂的业务逻辑。
+
+例如，求购物车中商品的总价，购物车数据如下：
+
+var goodList = [
+    {
+        good: 'paper',
+        price: 12
+    },
+    {
+        good: 'book',
+        price: 58
+    },
+    {
+        good: 'CD',
+        price: 15
+    }
+]
+
+然后运用reduce()方法可以轻松的获得所有商品的总价格：
+
+var count = goodList.reduce(function(prev, cur) {
+    return cur.price + prev;
+}, 0);
+console.log(count); // 85
+
+如果用户有10元的优惠券的话，我们只需要将 -10作为初始值传入reduce()方法中就可以了。
+
+var count = goodList.reduce(function(prev, cur) {
+    return cur.price + prev;
+}, -10);
+console.log(count); // 75
+
+我们给例子增加一点难度，商城在搞促销，对商品有一定的折扣，我们应该如何求得商品的总价格呢？利用reduce方法也可以很容易解决的。
+
+var goodList = [
+    {
+        good: 'paper',
+        price: 12
+    },
+    {
+        good: 'book',
+        price: 58
+    },
+    {
+        good: 'CD',
+        price: 15
+    }
+];
+
+var dis = {
+    paper: 0.5,
+    book: 0.8,
+    CD: 0.2
+}
+
+var count = goodList.reduce(function(prev, cur) {
+    return cur.price + prev;
+}, -10);
+
+var qcount = goodList.reduce(function(prev, cur) {
+    return cur.price * dis[cur.good] + prev;
+}, 0);
+
+console.log(count, qcount); // 75 55.400000000000006
+
+再举一个例子，如何求得一串字符串中每个字母出现的次数？
+var arrString = 'fghffgaga';
+var rel = arrString.split('').reduce(function(res, cur) {
+  res[cur] ? res[cur] ++ : res[cur] = 1
+  return res;
+}, {})
+console.log(rel); // {f: 3, g: 3, h: 1, a: 2}
+
