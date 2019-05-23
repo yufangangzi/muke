@@ -3,3 +3,8 @@
 3  修改public.xml   添加要添加的端口 <port protocol="tcp" port="8091"/>
 4  ：wq 保存退出
 5 重启防火墙  firewalld-cmd --reload
+
+
+
+
+https://www.jianshu.com/p/0b9fc6f4ba83
