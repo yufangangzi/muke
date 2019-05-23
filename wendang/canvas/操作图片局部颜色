@@ -1,0 +1,81 @@
+需求  给定一张图片  和图片要改变颜色的位置坐标范围    原始颜色 和 要变为的颜色
+
+// 利用canvas 替换颜色
+replaceColor(imgData,fsourceColor,freplaceColor,tolerence){
+  let sourceColor = this.colorRgb(fsourceColor)
+  let replaceColor = this.colorRgb(freplaceColor)
+  for(var i=0;i<imgData.data.length/4;i++){
+      let red=imgData.data[0+i*4];
+      let green=imgData.data[1+i*4];
+      let blue=imgData.data[2+i*4];
+      let alpha=imgData.data[3+i*4];
+      if(Math.abs(red-sourceColor.r)<tolerence && Math.abs(green-sourceColor.g)<tolerence && Math.abs(blue-sourceColor.b)<tolerence/* && alpha==255*/){
+          imgData.data[0+i*4] = replaceColor.r;
+          imgData.data[1+i*4] = replaceColor.g;
+          imgData.data[2+i*4] = replaceColor.b;
+      }
+  }
+    return imgData;
+},
+// 遍历图片上的开关颜色转换
+changeImage (loc,fsourceColor,freplaceColor,tolerence) {
+  // loc 坐标   fsourceColor 原来的颜色  freplaceColor 要变的颜色   tolerence 色值差
+    let width = this.drawing.getAttribute('width');
+    let height = this.drawing.getAttribute('height');
+    let locations = loc.split(' ')
+    let x= Math.floor(locations[0]);
+    let y = Math.floor(locations[1]);
+    let w = Math.floor(locations[2]);
+    let h = Math.floor(locations[3]);
+  try {
+    let fdata=this.ctx.getImageData(x,y,w-x,h-y)
+    let data = this.replaceColor(fdata,fsourceColor,freplaceColor,tolerence)
+    this.ctx.putImageData(data,x,y)
+    var dataURL=this.drawing.toDataURL('image/jpeg');
+    this.op = dataURL
+  }catch (err){
+    console.log(err)
+  }
+
+},
+// 将16进制的颜色改为 rgb
+colorRgb (strCol) {
+  var sColor = strCol.toLowerCase();
+  var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+  if(sColor && reg.test(sColor)){
+    if(sColor.length === 4){
+      var sColorNew = "#";
+      for(var i=1; i<4; i+=1){
+        sColorNew += sColor.slice(i,i+1).concat(sColor.slice(i,i+1));
+      }
+      sColor = sColorNew;
+    }
+    //处理六位的颜色值
+    var sColorChange = [];
+    for(var i=1; i<7; i+=2){
+      sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));
+    }
+    return {
+      r: sColorChange[0],
+      g: sColorChange[1],
+      b: sColorChange[2],
+    }
+  }else{
+    return sColor;
+  }
+},
+
+// 将图片初始化到 CANVAS
+initCanvas () {
+  this.drawing = document.createElement("canvas");
+  this.ctx = this.drawing.getContext('2d');
+  let img = new Image();
+  img.onload = () => {
+    this.drawing.width = img.width;
+    this.drawing.height = img.height;
+    this.ctx.drawImage(img,0,0,img.width,img.height);
+    this.op= this.drawing.toDataURL('image/jpeg');
+  };
+  img.setAttribute('crossOrigin', 'anonymous');
+  img.src = this.imgUrl
+}
