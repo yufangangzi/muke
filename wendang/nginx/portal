@@ -1,0 +1,143 @@
+server {
+        listen       8091;
+        server_name  _;
+        location = /ZuFbjdYTa5.txt {
+	    default_type    text/plain;
+	    return 200 "b758d220017d1c4ddc5e90a0aa0a4120";
+        }
+        location = /hIrm3b73nm.txt {
+            default_type    text/plain;
+            return 200 "8a4db1d921b78a3a8b313b4806035825";
+        }
+        location = /shianlian/sy/hIrm3b73nm.txt {
+            default_type    text/plain;
+            return 200 "8a4db1d921b78a3a8b313b4806035825";
+        }
+        location /static/ {
+            root  iot/portal/assets;
+        }
+        location /formAdvice {
+            proxy_pass http://10.144.132.80:8002/formAdvice;
+        }
+        location /fastdfs {
+            proxy_pass http://10.144.132.135:8888/;
+        }
+        location ^~ /daditu/ {
+            proxy_set_header Host 'www.zkpda.net';
+            proxy_set_header Origin 'http://www.zkpda.net';
+
+            proxy_pass http://www.zkpda.net/;
+        }
+        location ^~ /news-api/ {
+            proxy_set_header HOST  'news-api.zhnykeji.com';
+            proxy_set_header Origin 'http://news-api.zhnykeji.com';
+
+	    proxy_pass http://news-api.zhnykeji.com;
+        }
+
+        location /api/ {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header REMOTE-HOST $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            proxy_set_header Host '10.26.20.92:8082';
+            proxy_set_header Origin 'http://10.26.20.92:8082/';
+            proxy_pass http://10.26.20.92:8082/api/;
+        }
+        location /sys {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header REMOTE-HOST $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            proxy_set_header Host '10.26.20.92:8082';
+            proxy_set_header Origin 'http://10.26.20.92:8082/';
+            proxy_pass http://10.26.20.92:8082/sys;
+        }
+        location / {
+            proxy_pass http://127.0.0.1:9999/;
+        }
+        location /search {
+            proxy_pass http://10.144.132.70:8000/search;
+        }
+        location /wx {
+            proxy_pass http://10.144.132.1:8005/;
+        }
+	location /wss {
+	    proxy_pass http://10.144.132.1:8005/;
+	    proxy_http_version 1.1;
+  	    proxy_set_header Upgrade $http_upgrade;
+	    proxy_set_header Connection "upgrade";
+	}
+        location /wxdev {
+            proxy_pass http://10.144.132.20:8005/;
+        }
+        location /shianlianwxdev {
+            proxy_pass http://10.144.132.30:8005/;
+        }
+        location /shianlianshop {
+            proxy_pass http://tejia.hao123.com/;
+           # sub_filter '特价_hao123上网导航_hao123上网导航' '商城';
+           # sub_filter_types text/html;
+           # sub_filter_once on;
+        }
+        location /shianliangroup1/ {
+            proxy_pass http://10.144.132.135:8888/;
+        }
+        location /wssdev {
+            proxy_pass http://10.144.132.20:8005/;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+        }
+        location /bigscreen/ {
+            proxy_pass http://10.144.132.51:83/bigscreen/;
+        }
+
+        location /qzSystem {
+            proxy_pass http://10.144.132.51:8090/qzSystem;
+        }
+        location /portal_iot {
+            proxy_pass http://10.144.132.51:80/;
+        }
+        location /portal_monitor {
+            proxy_pass http://10.144.132.51:81/;
+        }
+	location /portal_dapeng {
+	    proxy_pass http://10.144.132.51:8090/dapeng/;
+	}
+        location /portal_dapeng/dapeng {
+            proxy_pass http://10.144.132.51:8090/dapeng/;
+        }
+	location /portal_dapeng/vehicle {
+	    proxy_pass http://10.144.132.51:8090/vehicle/;
+	}
+	location /portal_computer {
+	    proxy_pass http://10.144.132.51:82/;
+	}
+	location /_nuxt {
+	    proxy_pass http://10.144.132.51:82/_nuxt/;
+	}
+	location /zhong_iot {
+	    proxy_pass http://10.144.132.80:8005/;
+	}
+	location /jiankon_iot {
+	    proxy_pass http://10.144.132.81:9002/;
+	}
+	location /jifang_img {
+	    proxy_pass http://10.144.132.51:82/jifang_img;
+	}
+	location /shianlian {
+	    proxy_pass http://10.144.132.51:83/;
+	}
+	location /shianmanage {
+	    proxy_pass http://10.144.132.51:83/dist/;
+	}
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        access_log  logs/portal.access.log  main;
+        error_log  logs/portal.error.log;
+}
+
