@@ -1,0 +1,15 @@
+如何在linux服务器端安装nodejs环境
+1. 下载所需的包文件，当下node的最新稳定版本为6.10.3 (具体可根据node的英文官网查看)
+wget https://npm.taobao.org/mirrors/node/v6.10.3/node-v6.10.3-linux-x64.tar.xz
+
+2.然后对xz文件进行解压
+xz -d node-v6.10.3-linux-x64.tar.xz
+
+3.对tar目录进行解压
+tar -xvf node-v6.10.3-linux-x64.tar
+
+sudo  vim /etc/profile
+export PATH=/sinochem/software/node-v8.11.3-linux-x64/bin:$PATH   添加path
+
+
+source /etc/profile
