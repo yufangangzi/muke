@@ -1,0 +1,16 @@
+一、在npm的官网上注册一个账号，https://www.npmjs.com/
+
+二、新建一个目录，比如node8，进入到这个node8目录里，使用npm login 命令登录
+
+三、新建一个目录，比如nodeadd，使用命令cd 进入到这个目录，执行命令npm init，按照提示填写对应的内容
+
+四、在nodeadd目录下新建一个文件index.js，里面写一些内容，例如：
+exports.sum = function () {
+  var res = 0;
+  for(var i=0; i< arguments.length; i++) {
+    res += arguments[i]
+  }
+  return res
+}
+五、利用npm publish 命令发布你的包，在发布之前可以在npm里搜索一下有没有和你包名字 一样的包，，
+npm publish 包名字     注意执行的目录 在 node8下
