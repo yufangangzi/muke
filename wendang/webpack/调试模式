@@ -1,0 +1,19 @@
+开发环境推荐使用：
+
+1.eval ：每个模块使用eval()和//@ sourceURL执行。这是非常快。主要缺点是，它没有正确显示行号，因为它被映射到转换代码而不是原始代码(没有来自加载器的源映射)。
+
+2.eval-source-map：每个模块使用eval()执行，而SourceMap作为DataUrl添加到eval()中。最初它是缓慢的，但是它提供快速的重建速度和产生真实的文件。行号被正确映射，因为它被映射到原始代码。它产生了最优质的开发资源。
+
+3.cheap-eval-source-map：与eval-source-map类似，每个模块都使用eval()执行。它没有列映射，它只映射行号。它忽略了来自加载器的源代码，并且只显示与eval devtool相似的经过转换的代码。
+
+4.cheap-module-eval-source-map：类似于cheap-eval-source-map，在本例中，来自加载器的源映射被处理以获得更好的结果。然而，加载器源映射被简化为每一行的单个映射。
+
+生产环境推荐使用：
+
+1.(none) ：(省略devtool选项)-不触发SourceMap。这是一个很好的选择。
+
+2.source-map：一个完整的SourceMap是作为一个单独的文件。它为bundle 添加了引用注释，因此开发工具知道在哪里找到它。
+
+3.hidden-source-map：与source-map相同，但不向bundle 添加引用注释。如果您只希望SourceMaps从错误报告中映射错误堆栈跟踪，但不想为浏览器开发工具暴露您的SourceMap，可以使用此选项。
+
+4.nosources-source-map：一个SourceMap是在没有源代码的情况下创建的。它可以用于在客户机上映射堆栈跟踪，而不暴露所有源代码。您可以将源映射文件部署到webserver。

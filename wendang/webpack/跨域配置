@@ -1,0 +1,20 @@
+proxy: {
+  '/api': {
+    target: 'http://localhost:3001',
+    pathRewrite: {'/api': ''}
+  }
+}
+可以将 /api 改写为 ''
+
+2 只是 moke 数据
+
+devServer: { // 开发服务配置
+  port: 3000,
+  before(app) {
+    app.get('/user', (req, res) => {
+      res.json({name:'你是谁啊'})
+    })
+  }
+},
+
+3 

@@ -1,0 +1,17 @@
+1. clearWebpackPlugin  2. copyWebpackPlugin 3. bannerPlugin
+
+第一个第二个是需要 插件的   第三个不需要
+
+npm install clear-webpack-plugin copy-webpack-plugin -D
+
+let cleanWebpackPlugin = require('clean-webpack-plugin')
+let copyWebpackPlugin = require('copy-webpack-plugin')
+let webpack = require('webpack')
+
+new cleanWebpackPlugin()
+new copyWebpackPlugin([
+  {from: 'wenjian', to: './'}
+])
+
+再生成的代码前面加上注释  一般添加版权信息
+new webpack.BannerPlugin('2019- cg')

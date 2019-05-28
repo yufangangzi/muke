@@ -1,0 +1,259 @@
+webpack 的安装
+ webpack  webpack-cli
+ npm webpack webpack-cli -D 表示当前开发依赖 上线不需要
+
+webpack 可以进行0配置
+打包工具 -》 js代码模块
+
+可以使用 npx build 打包  他会去node_modules 中找 ./bin/webpack 文件 这个文件中会执行 上一级目录中的 webpack 如下
+ 
+ #!/bin/sh
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+
+case `uname` in
+    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
+esac
+
+if [ -x "$basedir/node" ]; then
+  "$basedir/node"  "$basedir/../webpack/bin/webpack.js" "$@"
+  ret=$?
+else 
+  node  "$basedir/../webpack/bin/webpack.js" "$@"
+  ret=$?
+fi
+exit $ret
+
+打包支持模块化代码   module.exports
+
+手动配置webpack 
+默认配置文件名字是  webpack.config.js 或者 webpackfile.js
+
+打包的过程是将模块转为对象 然后递归调用
+
+可以手动指定配置文件  npx webpack --config ****
+在 package.js 中 添加script 脚本  
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.my.js"
+  },
+执行的时候  npm run build
+
+内置开发服务
+webpack-dev-server
+
+可以执行 npx webpack-dev-server
+也可以配置 
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server",
+    "build": "webpack --config webpack.config.my.js"
+  },
+
+html 插件
+安装 html-webpack-plugin 插件
+let htmlWebpackPlugin = require('html-webpack-plugin')
+plugins: [ // 数组放着所有的webpack插件
+  new htmlWebpackPlugin({
+    template: './src/index.html',
+    filename: 'index.html',
+    minify: {
+      removeAttributeQuotes: true, // 删除模板中的双引号
+      collapseWhitespace: true, // 折叠行
+    },
+    hash: true
+  })
+]
+
+处理css 
+下载 css-loader style-loader  less less-loader
+
+rules: [
+      { // css-loader 续接@import这种语法
+        // style-loader 是把css 插入到 head 的标签中
+        // loader 的特点 希望单一
+        // loader的用法 字符串只用一个loader 多个需要数组[]  默认是从右到左执行 ，也可以传对象
+        // 处理 less 文件
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              insertAt: 'top' // 可以将生成的文件插到上面
+            }
+          },
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader',
+            // options: {
+            //   insertAt: 'top' // 可以将生成的文件插到上面
+            // }
+          },
+          'css-loader',
+          'less-loader'
+        ]
+      }
+    ]
+
+将css 抽出放到 link标签获取
+npm install mini-css-extract-plugin -D
+
+在plugins 中添加
+new MiniCssExtractPlugin({
+      filename: 'main.css'
+    })
+在loader 中把style-loader 去掉 改为 
+MiniCssExtractPlugin.loader,
+
+
+给css 添加各个浏览器的前缀
+npm install autoprefixer postcss-loader -D
+使用autoprefixer  需要用到 postcss-loader 然后创建 postcss.config.js
+
+module.exports = {
+  plugins: [require('autoprefixer')]
+}
+
+压缩css 文件 
+
+通过在这个 https://www.npmjs.com 中查找 mini-css-extract-plugin 可以找到需要下面的插件
+npm install optimize-css-assets-webpack-plugin -D
+npm install terser-webpack-plugin -D
+
+const OptimizeCSS = require('optimize-css-assets-webpack-plugin')
+const TerserJSPlugin = require('terser-webpack-plugin');
+optimization: { // 优化项
+    minimizer: [
+      new TerserJSPlugin(),
+      new OptimizeCSS()
+    ]
+  },
+
+
+将es6  或者 更高的代码 转为 es5
+转译代码需要这几个插件 
+babel-loader @babel/core @babel/preset-env
+
+{
+  test: /\.js$/,
+  use: {
+    loader: 'babel-loader',
+    options: { // 用babel-loader 转代码
+      presets: [
+        '@babel/preset-env'
+      ],
+      plugins: [ // 这个里面是一些高级语法的插件集合
+        '@babel/plugin-proposal-class-properties'
+      ]
+    }
+  }
+},
+
+在处理 generator promise 等语法的时候 会报错
+https://babeljs.io/  在这个里面去查文档
+
+Install it as development dependency.
+
+npm install --save-dev @babel/plugin-transform-runtime
+
+Copy
+and @babel/runtime as a production dependency (since it's for the "runtime").
+
+npm install --save @babel/runtime
+
+Copy
+The transformation plugin is typically used only in development, but the runtime itself will be depended on by your deployed code. See the examples below for more details.
+
+实例上的一些语法需要 @babel/polyfill
+
+
+js 语法校验
+https://eslint.org/demo/
+
+npm install eslint eslint-loader -D
+
+在loader 中 use: {
+  loader: 'eslint-loader,
+  options: {
+    enforce: 'pre'   // previous  post  normal   previous指的是在其他 loader 之前执行  post 是在其他之后执行
+  }
+}
+
+暴露全局对象
+
+使用 expose-loader  暴露全局的loader  内联的loader
+1 npm install expose-loader -D
+
+代码中的写法 
+import $ from 'expose-loader?$!jquery'
+console.log(window.$)
+
+或者在rules 中添加
+{
+  test: require.resolve('jquery),
+  use: 'expose-loader?$'
+}
+import $ from 'jquery'
+
+2 在每个模块中注入 使用 webpack.ProvidePlugin({
+  $: 'jquery';
+})
+
+或者直接使用 script 直接使用 cdn 引用
+
+3 externals: {
+  jquery: '$'
+}
+告诉是第三方模块在 外部引用了 就不打包了
+
+webpack 打包图片
+ 1 在js 中创建图片来引用
+   import logo from './logo.JPG';
+    let image  = new Image();
+    image.src = logo;
+    document.body.appendChild(image)
+  {
+    test: /\.(png|jpg|JPG|gif)$/,
+    use: 'file-loader'
+  },
+ 2 在 css 中引用 background
+   background: url('./logo.JPG')
+
+ 3 img 标签 直接引用的
+  npm install html-withimg-loader -D
+
+使用 url-loader 可以将小于指定大小的图片 转为base64
+  {
+    test: /\.(png|jpg|JPG|gif)$/,
+    // 做个限制  当我们的图片 大于 k 的时候 用 base64 处理
+    use: {
+      loader: 'url-loader',
+      options: {
+        limit: 500*1024
+      }
+    }
+  },
+
+
+将图片和css 指定输出路径
+
+{
+    test: /\.(png|jpg|JPG|gif)$/,
+    // 做个限制  当我们的图片 大于 k 的时候 用 base64 处理
+    use: {
+      loader: 'url-loader',
+      options: {
+        limit: 500*1024，
+        outputPath: 'img/'
+      }
+    }
+  },
+  new MiniCssExtractPlugin({
+      filename: 'css/main.css'
+    })
+  
+  publicPath: '' 可以指定路径前面的域名

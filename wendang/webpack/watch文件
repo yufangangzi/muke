@@ -1,0 +1,7 @@
+watch: true,
+watchOptions: {
+  // 监控的选项
+  poll: 1000, // 美妙问我1000次
+  aggregateTimeout: 500, // 防抖  当输入停顿 500 毫秒的时候
+  ignored: /node_modules/  // 不需要进行监控的文件
+}
