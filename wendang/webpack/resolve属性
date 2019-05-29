@@ -1,0 +1,12 @@
+resolve: {
+    // 解析第三方模块  common
+    // modules:[path.resolve('node_modules')],
+    // mainFields: ['style', 'nain'], // 执定优先从哪个文件映入  三种方式如下
+    // mainFiles: [], // 入口文件
+    // alias: {
+    //   bootstrap: 'bootstrap/dist/css/bootstrap.css'
+    // }
+
+    // 添加后缀 一次找这些配置的后缀
+    extensions: ['.js','.css','.json','.vue']
+  },

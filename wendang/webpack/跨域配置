@@ -17,4 +17,16 @@ devServer: { // 开发服务配置
   }
 },
 
-3 
+3 有服务端 不做代理 在服务端 启动webpack
+
+let app = express()
+let webpack = require('webpack')
+
+// 中间件  webpack-dev-middleware
+let middle = require('webpack-dev-middleware')
+
+let config = require('./webpack.config.js')
+
+let compiler = webpack(config)
+
+app.use(middle(compiler))

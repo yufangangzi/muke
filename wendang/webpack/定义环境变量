@@ -1,0 +1,5 @@
+使用 webpack 注入全局变量
+使用webpack 的插件  webpack.DefinePlugin
+new webpack.DefinePlugin({
+      DEV: JSON.stringify('development')
+    }),

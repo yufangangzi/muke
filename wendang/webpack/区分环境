@@ -1,0 +1,20 @@
+将开发和生产的文件分开
+创建3个文件
+webpack.base.js
+webpack.dev.js
+webpack.prod.js
+
+npm install webpack-merge -D
+
+let {smart} = require('webpack-merge')
+let base = require('./webpack.base')
+
+module.exports = smart(base, {
+  mode: 'production',
+  optimization: {
+    minimize:[]
+  },
+  plugins: [
+
+  ]
+})

@@ -1,0 +1,56 @@
+优化项
+1.noParse
+通过 import 引用来的包 会去解析包中是否有依赖关系  如果一些库中我们知道不需要去解析依赖的话 可以通过如下
+noParse: /jquery/ // 不去解析jquery 中的依赖库
+
+2.exclude: /node_modules/,
+  include: path.resolve('src')
+  上面两个加一个就可以
+
+3. 时间插件
+   momentjs
+
+   npm install momentjs
+
+   在引用这个包的时候 会去引用语言包
+
+   new webpack.IgnorePlugin(/\.\/locale/, /moment/) 会忽略moment 中的语言包
+
+   手动引入中文包 import 'moment/locale/zh-cn';
+
+4.  webpack.DllPlugin
+   react react-dom
+   处理react  需要这个插件  @babel/preset-react
+   可以把 react  单独打包
+
+   创建单独打包react 的 配置文件
+   let path = require('path')
+    let webpack = require('webpack')
+    module.exports = {
+      mode: 'development',
+      entry: {
+        react: ['react', 'react-dom']
+      },
+      output: {
+        filename: '_dll_[name].js',
+        path: path.resolve(__dirname, 'dist'),
+        library:'_dll_[name]' // 指定打包出去的变量名字
+      },
+      plugins: [
+        new webpack.DllPlugin({
+          name: '_dll_[name]',
+          path: path.resolve(__dirname,'dist','mainfest.json')
+        })
+      ]
+    }
+
+    npx webpack --config webpack.react.js
+    在dist 目录中生成 _dll_react.js 和 mainfest.json
+
+    在模板中引用 _dll_react.js
+
+    在主配置文件中 添加 插件可以让代码单独找打包好的文件
+
+    new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname,'dist','mainfest.json')
+    }),
