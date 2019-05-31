@@ -1,0 +1,18 @@
+optimization: {
+  splitChunks: {   // 分割代码块
+    cacheGroups: { //  缓存组
+      common: {   // 公共的模块
+        chunks: 'initial',
+        minSize: 0,
+        minChunks: 2
+      },
+      vendor: {
+        priority: 1,
+        test: /node_modules/,
+        chunks: 'initial',
+        minSize: 0,
+        minChunks: 2
+      }
+    }
+  }
+}

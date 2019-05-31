@@ -1,0 +1,32 @@
+使用 happypack 实现多线程打包
+
+npm install happypack -D
+
+let happypack = require('happypack')
+
+rules: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    use:'Happypack/loader?id=js',
+  },
+]
+new Happypack({
+  id:'js',
+  use: [
+    {
+      loader: 'babel-loader',
+      options: { //
+        presets: [
+          '@babel/preset-env',
+          '@babel/preset-react'
+        ],
+        plugins: [
+          '@babel/plugin-proposal-class-properties',
+        ]
+      }
+    }
+  ]
+}),
+
+项目大的时候 可以减少时间

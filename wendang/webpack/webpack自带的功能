@@ -1,0 +1,8 @@
+默认情况下
+ tree-shaking  把没用到的代码自动删除掉
+ 使用 import 在生产情况会删除掉没用的代码
+但是 require 的不行
+
+scope hosting 作用域提升
+ 在webpack 中会自动省略 可以简化的代码
+
