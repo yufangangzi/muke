@@ -1,0 +1,52 @@
+webpack 本质上是事件流的机制  他的工作流程就是将各个插件串联起来  实现这个的核心就是 Tapable  核心
+原理就是依赖于发布订阅模式
+
+npm install Tapable
+
+let {SyncHook} = require('tapable)
+
+class Lesson {
+  constructor() {
+    this.hooks = {
+      arch: new SyncHook(['name'])
+    }
+  }
+  tap() { // 注册监听函数
+    this.hooks.arch.tap('node', function(name) {
+      console.log('node', name)
+    })
+    this.hooks.arch.tap('react', function(name) {
+      console.log('react', name)
+    })
+  }
+  start() {
+    this.hooks.arch.call('cg')
+  }
+}
+
+let l = new Lesson()
+l.tap()   //注册两个事件
+l.start()  //启动钩子
+
+
+实现的原理
+
+class SyncHook {
+  constructor(args) {
+    this.task = []
+  }
+  call(...args) {
+    this.task,forEach((task) => {
+      task(...args)
+    })
+  }
+  tap(name, task) {
+    this.tasks.push(task)
+  }
+}
+let hook = new SyncHook(['name'])
+
+hook.tap('react), function (name) {
+
+}
+hook.call('cg')

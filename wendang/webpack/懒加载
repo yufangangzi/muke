@@ -1,0 +1,6 @@
+npm install @babel/plugin-syntax-dynamic-import -D
+
+可以在js 中执行 import('wenjian').then(data => {
+  console.log(data)
+})
+在import 中是个promise 返回模块
